@@ -5,6 +5,7 @@ import { useStoreContext } from "../utils/GlobalState";
 import { QUERY_PRODUCTS } from "../utils/queries";
 import spinner from "../assets/spinner.gif";
 import Cart from "../components/Cart";
+import { idbPromise } from "../utils/helpers";
 import {
   REMOVE_FROM_CART,
   UPDATE_CART_QUANTITY,
@@ -32,8 +33,21 @@ function Detail() {
         type: UPDATE_PRODUCTS,
         products: data.products,
       });
+
+      data.products.forEach((product) => {
+        idbPromise("products", "put", product);
+      });
     }
-  }, [products, data, dispatch, id]);
+    // get cache from idb
+    else if (!loading) {
+      idbPromise("products", "get").then((indexedProducts) => {
+        dispatch({
+          type: UPDATE_PRODUCTS,
+          products: indexedProducts,
+        });
+      });
+    }
+  }, [products, data, loading, dispatch, id]);
 
   const addToCart = () => {
     // find the cart item with the matching id
@@ -51,6 +65,8 @@ function Detail() {
         type: ADD_TO_CART,
         product: { ...currentProduct, purchaseQuantity: 1 },
       });
+      // if product isnt in the cart yet add it to the current shopping cart in indexedDB
+      idbPromise("cart", "put", { ...currentProduct, purchaseQuantity: 1 });
     }
   };
 
@@ -59,6 +75,9 @@ function Detail() {
       type: REMOVE_FROM_CART,
       _id: currentProduct._id,
     });
+
+    // upon removal from cart, delete the item from IndexedDB using the currentProduct._id to locate what to remove
+    idbPromise("cart", "delete", { ...currentProduct });
   };
 
   return (
