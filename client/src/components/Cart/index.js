@@ -5,12 +5,12 @@ import "./style.css";
 import { useStoreContext } from "../../utils/GlobalState";
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
-import { loadStripe } from '@stripe/stripe-js'
 import { QUERY_CHECKOUT } from '../../utils/queries';
+import { loadStripe } from '@stripe/stripe-js';
 import { useLazyQuery } from '@apollo/react-hooks';
 
 
-const { stripePromise } = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
+const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const Cart = () => {
   const [state, dispatch] = useStoreContext();
@@ -28,7 +28,7 @@ const Cart = () => {
     }
   }, [state.cart.length, dispatch]);
   
-  //use useEffect to monitor when `data` changes for stripe checkout
+  // use useEffect to monitor when `data` changes for stripe checkout
   useEffect(() => {
       if (data) {
           stripePromise.then((res) => {
@@ -89,7 +89,11 @@ const Cart = () => {
           <div className="flex-row space-between">
             <strong>Total: ${calculateTotal()}</strong>
             {Auth.loggedIn() ? (
-              <button onClick={submitCheckout}>Checkout</button>
+              <button 
+              onClick={submitCheckout}
+              >
+                Checkout
+              </button>
             ) : (
               <span>(log in to check out)</span>
             )}
