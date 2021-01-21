@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useQuery } from '@apollo/react-hooks';
-import { useStoreContext } from '../../utils/GlobalState';
 import * as actions from '../../utils/actions';
 import ProductItem from "../ProductItem";
 import { QUERY_PRODUCTS } from "../../utils/queries";
