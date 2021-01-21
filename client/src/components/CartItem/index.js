@@ -1,5 +1,5 @@
 import React from "react";
-import * as actions from '../../utils/actions/';
+import * as actions from '../../utils/actions';
 import { idbPromise } from "../../utils/helpers";
 import { useDispatch } from 'react-redux';
 
