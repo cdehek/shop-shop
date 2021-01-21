@@ -19,7 +19,7 @@ function Detail() {
 
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
-  const { products, state } = state;
+  const { products, cart } = state;
 
   useEffect(() => {
     if (products.length) {
