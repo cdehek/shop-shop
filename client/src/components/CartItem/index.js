@@ -1,5 +1,4 @@
 import React from "react";
-import { useStoreContext } from "../../utils/GlobalState";
 import * as actions from '../../utils/actions/';
 import { idbPromise } from "../../utils/helpers";
 import { useDispatch } from 'react-redux';
