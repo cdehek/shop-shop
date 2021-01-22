@@ -1,20 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { idbPromise, pluralize } from "../../utils/helpers";
-import * as actions from '../../utils/actions';
-import { useSelector, useDispatch } from 'react-redux'
+import * as actions from "../../utils/actions";
+import { useSelector, useDispatch } from "react-redux";
 
 function ProductItem(item) {
-  // const addToCart = () => {
-  //   dispatch({
-  //     type: ADD_TO_CART,
-  //     product: { ...item, purchaseQuantity: 2 },
-  //   });
-  // };
-  const cart = useSelector(state => state);
-  const dispatch = useDispatch();
   const { image, name, _id, price, quantity } = item;
 
+  const cart = useSelector(state => state.cart);
+  const dispatch = useDispatch();
 
   const addToCart = () => {
     // find the cart item with the matching id
